@@ -1,6 +1,8 @@
 # Kenya Water Points: Data Cleaning Project
 
 A data cleaning project on real water point data for Kenya, built around a reusable 15-item cleaning checklist. The checklist was written from problems met on an earlier project, then run end to end on the Water Point Data Exchange (KEN) dataset (21,953 records, 54 columns). Every finding is logged, and every change is a fix, a flag, or a documented decision to leave the data alone.
+## The problem
+A repair budget built on water point data is only as good as the data. This file combines records from 15 organisations that recorded things in different ways. The project asks two things: how clean is the data, and once it is cleaned, what can it honestly say about which water points are failing?
 
 ## Dataset
 - **Source:** Water Point Data Exchange (WPdx), shared on the Humanitarian Data Exchange: https://data.humdata.org/dataset/wpdx_ken
@@ -17,7 +19,7 @@ The original files in data/original are unchanged. The workbook in data/working 
 The checklist has 15 items in five groups: duplicates, blanks, consistency, data types and validation, plus process rules and a first look at the data. A running order sheet puts them in sequence: Prepare, Detect, Fix, Verify, Protect. It was improved five times while running it on this dataset, for example by adding wildcard searches for hidden placeholders, checks for numeric stand-ins like 0, and a check for capital-letter variants that filters cannot see.
 
 ## Tools Used
-Microsoft Excel (COUNTBLANK, COUNTIF with wildcards, SUMPRODUCT, ISNUMBER, EXACT, TRIM, Find & Replace, Remove Duplicates, filters), Git and GitHub.
+Microsoft Excel (COUNTBLANK, COUNTIF with wildcards, SUMPRODUCT, ISNUMBER, EXACT, TRIM, Find & Replace, Remove Duplicates, filters, PivotTables, charts), Git and GitHub.
 
 ## Process
 1. **Prepare:** kept the original CSV untouched, worked on a copy, and took a first look at the size, columns and definitions.
@@ -28,8 +30,9 @@ Microsoft Excel (COUNTBLANK, COUNTIF with wildcards, SUMPRODUCT, ISNUMBER, EXACT
 6. **Fix:** corrected what was safe to correct, flagged what was uncertain, and left alone what could not be known.
 7. **Verify:** re-ran the checks to confirm nothing broke and the counts still reconcile.
 8. **Document:** logged every finding and decision, and summarised the run.
+9. **Analyse:** built source, county, technology and install-year tables with COUNTIFS and PivotTables, tied each one to totals already checked, and compared every result by data source before trusting it.
 
-## Key Findings
+## Data quality findings
 - 13 of the 54 columns hold no data at all, and 4 more are 84% to 92% blank.
 - 277 rows have "Unknown" in status_id, and 1,028 rows use 0 as an activity ID.
 - 11,571 of the 13,578 Non-Functional points (about 85%) also report water available in status_id. The two columns measure different things, so this was flagged and not changed.
@@ -57,6 +60,23 @@ Microsoft Excel (COUNTBLANK, COUNTIF with wildcards, SUMPRODUCT, ISNUMBER, EXACT
 
 ![County chart](images/q1-county-chart.png)
 ![Sources table](images/q1-sources.png)
+
+### Technology type
+Motorized pumps have the lowest non-functional share (6.6%). The apparent gap between hand pumps and tapstands in the combined data comes mostly from which source supplied each technology.
+
+![Technology chart](images/q2-technology-chart.png)
+
+### Install year
+Install year shows no consistent link with failure once the source is taken into account.
+
+![Install year chart](images/q3-install-year-chart.png)
+
+## Key Findings
+1. 12 of the 15 data sources mark every one of their points Non-Functional (12,179 points, about 90% of all non-functional points). The overall 61.85% non-functional share mostly reflects who supplied the data, not the condition of the water points.
+2. Using only the 3 sources whose statuses vary (9,774 points), 14.3% of points are non-functional. Among the 14 counties with 30 or more of those points, shares run from 4.2% (Kajiado) to 20.5% (Makueni). The top five (Makueni, Siaya, Kisumu, Busia, Migori) sit close together at about 16% to 20%, so their order is not firmly established.
+3. Motorized pumps have the lowest non-functional share: 6.6% (259 points, all from Virtual Kenya), against 16.3% for hand pumps in the same source. Inside USAID/KEA KIWASH, hand pumps and tapstands fail equally often (13.3% against 13.5%), so the gap in the combined data (16.0% against 13.4%) largely comes from which source supplied each technology.
+4. Install year shows no consistent link with failure. Older points fail about twice as often in Virtual Kenya (18.0% for points installed up to 1999, against 8.3% for 2010-2014), but there is no pattern in USAID/KEA KIWASH (12.9% to 17.4% across periods). The two sources also surveyed about nine years apart, so "older" does not mean the same thing in each.
+5. Coverage is limited: 8 of Kenya's 47 counties have no records, only 14 counties have enough points to rank, and about 24% of the varied-source points have no water technology recorded.
 ## Screenshots
 
 ![Run summary](images/run-summary.png)
