@@ -19,7 +19,8 @@ The original files in data/original are unchanged. The workbook in data/working 
 The checklist has 15 items in five groups: duplicates, blanks, consistency, data types and validation, plus process rules and a first look at the data. A running order sheet puts them in sequence: Prepare, Detect, Fix, Verify, Protect. It was improved five times while running it on this dataset, for example by adding wildcard searches for hidden placeholders, checks for numeric stand-ins like 0, and a check for capital-letter variants that filters cannot see.
 
 ## Tools Used
-Microsoft Excel (COUNTBLANK, COUNTIF with wildcards, SUMPRODUCT, ISNUMBER, EXACT, TRIM, Find & Replace, Remove Duplicates, filters, PivotTables, charts), Git and GitHub.
+Microsoft Excel (COUNTBLANK, COUNTIF with wildcards, SUMPRODUCT, ISNUMBER, EXACT, TRIM, Find & Replace, Remove Duplicates, filters, PivotTables, charts)
+, Git and GitHub.
 
 ## Process
 1. **Prepare:** kept the original CSV untouched, worked on a copy, and took a first look at the size, columns and definitions.
@@ -84,6 +85,34 @@ Install year shows no consistent link with failure once the source is taken into
 ![Checklist run](images/checklist-run.png)
 ![Cleaning checklist](images/cleaning-checklist.png)
 *The screenshot shows the first items. The full 16-item checklist is in the checklist folder.*
+
+## Day 15: Asking the right questions
+
+I wrote 10 questions the cleaned data could answer (sheet "Day 15 questions" in `analysis/wpdx-kenya-analysis.xlsx`). Eight are answered; two are still open (distance to a primary road, and how users pay). I answered my top 3 and wrote a one-page summary (sheet "Day 15 summary").
+
+Same rules as the earlier analysis: only the 3 sources whose statuses vary are used (9,774 points, 1,399 non-functional = 14.3%), "Non-Functional" means status_clean = Non-Functional only, a share is reported only when a group has 30 or more points, and every result is checked within each source before it is trusted.
+
+### Findings
+
+- **Water source type (Q4):** Boreholes fail far more often than protected wells in USAID/KEA KIWASH (25.01% vs 4.29%), but the two are about the same in Virtual Kenya (12.27% vs 13.08%).
+- **People assigned to non-functional points (Q6):** Makueni, Kisumu and Busia have the most people assigned to non-functional points (52.40% of the 701,622 people in total, a modelled estimate), but 85.2% of the top 5 counties' people come from one source, USAID/KEA KIWASH, so this ranking should not be read as the counties with the greatest need.
+- **Management type (Q7):** In USAID/KEA KIWASH, Community Management points fail more often than Private Operator/Delegated Manager points (16.69% vs 9.11%), but in Virtual Kenya the two are almost the same (8.73% vs 9.40%).
+
+![Water source type by source](images/pivot4-source-type-by-source.png)
+
+![Management type by source](images/pivot5-management-by-source.png)
+
+![People assigned by county and source](images/pivot6-people-by-county-source.png)
+
+![Day 15 findings summary](images/day15-findings-summary.png)
+
+### What to be careful about
+
+- Sources may record status in different ways, so a gap between sources could reflect how the data was collected.
+- People assigned to a point is a modelled estimate, and 115 of the 1,399 non-functional points have none recorded, so county totals are minimums.
+- 583 points have no management type recorded.
+- These results describe patterns at one point in time and do not show what causes failure.
+
 ## Files
 - **checklist:** the reusable cleaning checklist (data-cleaning-checklist.xlsx)
 - **data/original:** the downloaded CSV files, unchanged
