@@ -113,6 +113,37 @@ Same rules as the earlier analysis: only the 3 sources whose statuses vary are u
 - 583 points have no management type recorded.
 - These results describe patterns at one point in time and do not show what causes failure.
 
+## Day 16: Conditional formatting (heat maps)
+
+I added three heat maps to `analysis/wpdx-kenya-analysis.xlsx`. Each one uses only the 3 sources whose statuses vary, applies the 30-point rule, and has a legend saying what the colours mean and what they do not.
+
+- **County ranking (colour scale):** the share of non-functional points in each of the 14 counties with 30 or more points, from red (highest, 20.48%) to green (lowest, 4.16%). Counties under 30 points are not coloured.
+- **Technology (formula rule):** a row turns orange when its share is above the overall share of 14.3%. Only Hand Pump (15.96%) is above it, and only by about 1.7 percentage points. "No technology recorded" is a data gap, so it is not coloured.
+- **County by source (two-way heat map):** each county's share inside each source, on one colour scale. Only Kisumu, Busia and Siaya have 30 or more points in both main sources. In Kisumu, USAID/KEA KIWASH shows 22.89% against 12.11% in Virtual Kenya. Siaya in Virtual Kenya (23.33%) is 7 of exactly 30 points, so it is the least certain cell on the map.
+
+![County ranking heat map](images/heatmap-q1-ranking.png)
+
+![Technology heat map](images/heatmap-q2-technology.png)
+
+![County by source heat map](images/heatmap-county-by-source.png)
+
+Colours show relative position only, not how serious the problem is.
+## Day 16: Conditional formatting (heat maps)
+
+I added three heat maps to `analysis/wpdx-kenya-analysis.xlsx`. Each one uses only the 3 sources whose statuses vary, applies the 30-point rule, and has a legend saying what the colours mean and what they do not.
+
+- **County ranking (colour scale):** the share of non-functional points in each of the 14 counties with 30 or more points, from red (highest, 20.48%) to green (lowest, 4.16%). Counties under 30 points are not coloured.
+- **Technology (formula rule):** a row turns orange when its share is above the overall share of 14.3%. Only Hand Pump (15.96%) is above it, and only by about 1.7 percentage points. "No technology recorded" is a data gap, so it is not coloured.
+- **County by source (two-way heat map):** each county's share inside each source, on one colour scale. Only Kisumu, Busia and Siaya have 30 or more points in both main sources. In Kisumu, USAID/KEA KIWASH shows 22.89% against 12.11% in Virtual Kenya. Siaya in Virtual Kenya (23.33%) is 7 of exactly 30 points, so it is the least certain cell on the map.
+
+![County ranking heat map](images/heatmap-q1-ranking.png)
+
+![Technology heat map](images/heatmap-q2-technology.png)
+
+![County by source heat map](images/heatmap-county-by-source.png)
+
+Colours show relative position only, not how serious the problem is.
+
 ## Files
 - **checklist:** the reusable cleaning checklist (data-cleaning-checklist.xlsx)
 - **data/original:** the downloaded CSV files, unchanged
