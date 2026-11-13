@@ -144,6 +144,28 @@ I added three heat maps to `analysis/wpdx-kenya-analysis.xlsx`. Each one uses on
 
 Colours show relative position only, not how serious the problem is.
 
+## Day 17: INDEX/MATCH (joining two Kenya datasets)
+
+I joined the county table to the 2019 Kenya census (KNBS) county table on the county name, using INDEX/MATCH. The census table is the cleaned one from my kenya-county-population-analysis project, copied into the sheet "Census 2019" of `analysis/wpdx-kenya-analysis.xlsx` as values only.
+
+What I added to the Q1 Ranking sheet:
+
+- **Population 2019 and land area (sq km)** for each of the 39 counties, with one formula per column. For population: `=INDEX('Census 2019'!$B$2:$B$48,MATCH($J2,'Census 2019'!$A$2:$A$48,0))`. Only the first range changes to pull a different column.
+- **A match key column** (`=UPPER(TRIM(A2))`), because the census writes county names in capitals. Three names did not match at first: Elgeyo-Marakwet, Nairobi and Taita Taveta (census spelling: ELGEYO/MARAKWET, NAIROBI CITY, TAITA/TAVETA). I fixed them in the key column and left the original water data names unchanged.
+- **An unmatched check** (`=SUMPRODUCT(--ISNA(I2:I40))`) that shows 0, so no county is left without a population.
+- **Varied-source points per 100,000 people**, a measure of how well the 3 varied sources cover each county.
+
+### Finding
+
+The 3 varied sources hold 176.8 recorded points per 100,000 residents in Busia, but only 4.1 in Kericho, a difference of about 43 times. Makueni, Kisumu and Busia, the three counties with the most people assigned to non-functional points (Q6), are all among the best-covered counties, with 126.5 or more points per 100,000 residents. This fits the Q6 caution that the ranking partly reflects where the sources recorded points, but it does not prove it.
+
+![INDEX/MATCH coverage](images/index-match-coverage.png)
+
+Counts are recorded points in the 3 varied sources, not all water points, so this is a coverage measure and not a measure of need.
+
+Population and land area: Kenya National Bureau of Statistics, 2019 Kenya Population and Housing Census.
+
+
 ## Files
 - **checklist:** the reusable cleaning checklist (data-cleaning-checklist.xlsx)
 - **data/original:** the downloaded CSV files, unchanged
