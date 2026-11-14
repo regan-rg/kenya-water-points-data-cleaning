@@ -165,6 +165,24 @@ Counts are recorded points in the 3 varied sources, not all water points, so thi
 
 Population and land area: Kenya National Bureau of Statistics, 2019 Kenya Population and Housing Census.
 
+## Day 18: Text functions
+
+I used text functions on a new sheet, "Text lab", in `analysis/wpdx-kenya-analysis.xlsx`. Its formulas read from the Data sheet, so the cleaned data is untouched.
+
+- **wpdx_id structure check:** `LEN`, `FIND`, `LEFT` and `MID` split each ID at the plus sign. All 21,953 IDs are 12 characters long with the plus sign in position 9, so no ID has a broken structure.
+- **Notes against water source type (Varied sources only):** `SEARCH`, `ISNUMBER` and `OR` flag notes that mention "borehole" or "B/H". 33 points do: 15 are recorded as Borehole/Tubewell, 1 as Protected Well and 17 as Undefined. Only 1 of the 16 points with a recorded type conflicts with its name. `&""` keeps blank cells blank in the formulas.
+- **Installer spacing:** `SUBSTITUTE` and `TRIM` tidy the spacing around slashes. All 3,067 changed cells carry one identical broad label, so the spacing is a formatting quirk and not an inconsistency.
+
+### Findings
+
+- The notes give no sign that recorded water source types are wrong. But 1,292 of the 9,774 Varied points (13.2%) have no recorded type (Undefined) and sit outside the Q4 comparison, and this check only sees points that have notes, so it cannot tell us what the other 1,275 Undefined points are.
+- An installer is recorded for 3,843 of the 21,953 points (17.5%). 3,067 of those (79.8%) are one broad label, "Community Based Organization/Self-Help Group/Faith Based Organization/NGO", so the column cannot be used to compare installers.
+
+![Text lab: ID check and notes cross-check](images/text-lab-id-and-notes.png)
+
+![Text lab: installer spacing check](images/text-lab-installer.png)
+
+
 
 ## Files
 - **checklist:** the reusable cleaning checklist (data-cleaning-checklist.xlsx)
